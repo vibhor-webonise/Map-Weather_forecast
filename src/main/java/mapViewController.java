@@ -11,7 +11,7 @@ import java.net.URL;
 /**
  * Created by webonise on 25-03-2015.
  */
-public class mapViewController {
+public class MapViewController {
     @FXML
     HBox myMapView;
 
