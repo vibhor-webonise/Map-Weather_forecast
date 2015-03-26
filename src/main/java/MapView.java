@@ -33,7 +33,7 @@ public class MapView extends Application {
         pane.setHgap(10);
         pane.setVgap(10);
         pane.setPadding(new Insets(25, 25, 25, 25));
-        
+
         Label location = new Label("Location:");
         pane.add(location, 0, 1);
         TextField locationField = new TextField();
