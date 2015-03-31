@@ -5,13 +5,13 @@
     <style type="text/css">
         html { height: 100% }
         body { height: 100%; margin: 0px; padding: 0px }
-        #googleMap { height: 100%; background-color: #666970;}
+        #gMaps { height: 100%; background-color: #666970;}
         #latlongclicked {width:300px; border:1px inset gray;}
     </style>
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?sensor=true">
     </script>
-    <script src="http://maps.googleapis.com/maps/api/geocode/json"></script>
+
     <script >
 
         var lat;
@@ -34,7 +34,7 @@
             mapTypeId:google.maps.MapTypeId.ROADMAP
         };
 
-        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        map = new google.maps.Map(document.getElementById("gMaps"), mapProp);
         document.map = map;
 
         google.maps.event.addListener(map,'click',function (event) {
@@ -42,8 +42,6 @@
              lng = event.latLng.lng();
              placeMarker(event.latLng);
              bridge.setLatLng(lat,lng);
-            // bridge.setLat(lat);
-             //bridge.setLng(lng);
 
           });
 	}
@@ -66,7 +64,7 @@
 
 <body >
 
-<div id="googleMap" style="width:100%; height:100%"></div>
+<div id="gMaps" style="width:100%; height:100%"></div>
 
 </body>
 </html>
