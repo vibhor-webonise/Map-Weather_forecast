@@ -6,7 +6,6 @@
         html { height: 100% }
         body { height: 100%; margin: 0px; padding: 0px }
         #gMaps { height: 100%; background-color: #666970;}
-        #latlongclicked {width:300px; border:1px inset gray;}
     </style>
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?sensor=true">
@@ -19,9 +18,9 @@
         var bridge = null;
          var map;
         function initialize() {
-        var jsonData;
+
         var mapProp = {
-            center:new google.maps.LatLng(18.812, 73.959),
+            center:new google.maps.LatLng(28.9890, 77.70630),
             zoom:10,
             overviewMapControl:false,
             panControl:true,
@@ -53,12 +52,12 @@
 	}
 
     function placeMarker(location){
-        //var myLatlng = new google.maps.LatLng(18.812, 73.959);
         var marker = new google.maps.Marker({
               position: location,
               map: map
           });
     }
+
 </script>
 </head>
 

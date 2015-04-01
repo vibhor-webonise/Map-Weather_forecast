@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Display latitude longitude on marker movement</title>
+    <script type="text/javascript"
+            src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet'/>
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        pre.ui-coordinates {
+        position:absolute;
+        bottom:10px;
+        left:10px;
+        padding:5px 10px;
+        background:rgba(0,0,0,0.5);
+        color:#fff;
+        font-size:11px;
+        line-height:18px;
+        border-radius:3px;
+        }
+
+
+    </style>
+    <script>
+        var lat;
+        var lng;
+        var bridge = null;
+    function initialize() {
+        L.mapbox.accessToken = 'pk.eyJ1IjoiamFtZXMtbGFuZS1jb25rbGluZyIsImEiOiJ3RHBOc1BZIn0.edCFqVis7qgHPRgdq0WYsA';
+       var exampleLoc = new L.LatLng(28.9890, 77.70630);
+        var map = L.mapbox.map('map', 'examples.map-i86nkdio',{
+        zoom:10,
+            overviewMapControl:false,
+            panControl:true,
+            rotateControl:false,
+            scaleControl:false,
+            navigationControl: true,
+            streetViewControl:false,
+            zoomControl:false,
+            mapTypeControl: true,
+            })
+            .setView(exampleLoc, 3);
+
+        var coordinates = document.getElementById('coordinates');
+
+        var marker = L.marker(exampleLoc, {
+            icon: L.mapbox.marker.icon({
+                'marker-color': '#f86767'
+        }),
+            draggable: true
+        }).addTo(map);
+
+        map.on('click',function(e){
+             L.marker(e.latlng).addTo(map);
+            lat = e.latlng.lat;
+            lng = e.latlng.lng;
+            coordinates.innerHTML = 'Latitude: ' + lat + '<br />Longitude: ' + lng;
+            bridge.setLatLng(lat,lng);
+         });
+
+        marker.on('dragend', function(e){
+             var m = marker.getLatLng();
+            coordinates.innerHTML = 'Latitude: ' + m.lat + '<br />Longitude: ' + m.lng;
+            lat = m.lat;
+            lng = m.lng;
+            bridge.setLatLng(lat,lng);
+        });
+
+    }
+         function getJavaToJSBridge(javaBridge){
+            bridge = javaBridge;
+        }
+
+</script>
+</head>
+<body>
+
+<div id="map"></div>
+<pre id='coordinates' class='ui-coordinates'></pre>
+
+</body>
+</html>

@@ -7,12 +7,9 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import javafx.application.Application;
 import javafx.concurrent.Worker;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
@@ -52,24 +49,31 @@ public class MapView extends Application {
 
         webView = new WebView();
         WebEngine webEngine = webView.getEngine();
-        final URL urlGoogleMaps = getClass().getResource("MapView.html");
+        final URL urlGoogleMaps = getClass().getResource("MapBox.html");
         webEngine.load(urlGoogleMaps.toExternalForm());
 
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.TOP_CENTER);
         gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(25, 25, 25, 25));
+        gridPane.setVgap(20);
+        gridPane.setPadding(new Insets(25, 25, 25, 50));
+
+        Label getWeatherLabel = new Label("Weather Forecast");
+        getWeatherLabel.setMaxSize(200,200);
+        getWeatherLabel.setScaleX(2);
+        getWeatherLabel.setScaleY(4);
+        gridPane.add(getWeatherLabel,1,1);
+        getWeatherLabel.setPrefSize(150, 20);
 
         Label latitude = new Label("Latitude:");
-        gridPane.add(latitude,0,1);
+        gridPane.add(latitude,0,3);
         latitudeField = new TextField();
-        gridPane.add(latitudeField, 1, 1);
+        gridPane.add(latitudeField, 1, 3);
 
         Label longitude = new Label("Longitude:");
-        gridPane.add(longitude, 0, 2);
+        gridPane.add(longitude, 0, 4);
         longitudeField = new TextField();
-        gridPane.add(longitudeField, 1, 2);
+        gridPane.add(longitudeField, 1, 4);
 
         webEngine.getLoadWorker()
                 .stateProperty()
@@ -81,34 +85,13 @@ public class MapView extends Application {
                     }
                 });
 
-        Button getWeatherButton = new Button("Get Weather Forecast");
-        gridPane.add(getWeatherButton,1,3);
-        getWeatherButton.setPrefSize(150, 20);
-        getWeatherButton.setOnAction(new EventHandler<ActionEvent>() {
+
+        /*getWeatherButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    String URL = "http://api.openweathermap.org/data/2.5/" +
-                            "weather?lat=" + latitudeField.getText() + "&" + "lon=" + longitudeField.getText() + "&type=JSON";
-                    //System.out.println(URL);
-                    Client client = Client.create();
-                    WebResource webResource = client.resource(URL) ;
-                    //System.out.println("Hi-1");
-                    ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-                    //System.out.println("Hi-2");
-                    if (response.getStatus() != 200) {
-                        throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
-                    } else {
-                        String json = response.getEntity(String.class);
-                        System.out.println(json);
-                        ParseJsonResult(json);
 
-                    }
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
             }
-        });
+        });*/
 
         Label country = new Label("Country:");
         gridPane.add(country,0,5);
@@ -175,7 +158,25 @@ public class MapView extends Application {
         this.lng = (Double)lng;
         latitudeField.setText(""+lat);
         longitudeField.setText(""+lng);
-
+        try {
+            String URL = "http://api.openweathermap.org/data/2.5/" +
+                    "weather?lat=" + latitudeField.getText() + "&" + "lon=" + longitudeField.getText() + "&type=JSON";
+            //System.out.println(URL);
+            Client client = Client.create();
+            WebResource webResource = client.resource(URL) ;
+            //System.out.println("Hi-1");
+            ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+            //System.out.println("Hi-2");
+            if (response.getStatus() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+            } else {
+                String json = response.getEntity(String.class);
+                System.out.println(json);
+                ParseJsonResult(json);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
      private void ParseJsonResult(String json) throws JSONException {
