@@ -161,12 +161,9 @@ public class MapView extends Application {
         try {
             String URL = "http://api.openweathermap.org/data/2.5/" +
                     "weather?lat=" + latitudeField.getText() + "&" + "lon=" + longitudeField.getText() + "&type=JSON";
-            //System.out.println(URL);
             Client client = Client.create();
             WebResource webResource = client.resource(URL) ;
-            //System.out.println("Hi-1");
             ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-            //System.out.println("Hi-2");
             if (response.getStatus() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
             } else {
@@ -181,9 +178,8 @@ public class MapView extends Application {
 
      private void ParseJsonResult(String json) throws JSONException {
 
-        // System.out.println("Hi-3");
              JSONObject jsonObject = new JSONObject(json);
-
+             weatherReport = new WeatherReport();
              //"coord"
              JSONObject jsonObject_coord = jsonObject.getJSONObject("coord");
              Double result_lon = jsonObject_coord.getDouble("lon");
@@ -209,9 +205,6 @@ public class MapView extends Application {
              if (jsonArray_weather.length() > 0) {
                  JSONObject jsonObject_weather = jsonArray_weather.getJSONObject(0);
                  String result_id = jsonObject_weather.getString("id");
-                /* weatherReport.setTagIcon(result_id);
-                 weatherIcon.setT(weatherReport.getTagIcon());*/
-
                  String result_main = jsonObject_weather.getString("main");
                  String result_description = jsonObject_weather.getString("description");
                  String result_icon = jsonObject_weather.getString("icon");
