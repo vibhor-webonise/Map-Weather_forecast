@@ -5,7 +5,8 @@
     <title>Display latitude longitude on marker movement</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script type="text/javascript"
-            src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
+            src="../js/mapbox.js"></script>
+
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet'/>
     <style>
         body { margin:0; padding:0; }
@@ -31,6 +32,9 @@
        var exampleLoc = new L.LatLng(28.9890, 77.70630);
         var map = L.mapbox.map('map', 'examples.map-i86nkdio')
             .setView(exampleLoc, 3);
+        map.addControl(L.mapbox.geocoderControl('mapbox.places', {
+        autocomplete: true
+    }));
 
         var coordinates = document.getElementById('coordinates');
 
@@ -42,7 +46,7 @@
         }).addTo(map);
 
         map.on('click',function(e){
-             L.marker(e.latlng).addTo(map);
+            // L.marker(e.latlng).addTo(map);
             lat = e.latlng.lat;
             lng = e.latlng.lng;
             coordinates.innerHTML = 'Latitude: ' + lat + '<br />Longitude: ' + lng;

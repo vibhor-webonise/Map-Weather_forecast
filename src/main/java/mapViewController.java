@@ -1,10 +1,8 @@
 import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 import java.net.URL;
 
@@ -24,7 +22,7 @@ public class MapViewController {
 
         public MyMapView(){
 
-            final URL urlGoogleMaps = getClass().getResource("MapView.html");
+            final URL urlGoogleMaps = getClass().getResource("web/MapView.html");
             webEngine.load(urlGoogleMaps.toExternalForm());
             webEngine.setJavaScriptEnabled(true);
             myMapView.getChildren().add(webView);

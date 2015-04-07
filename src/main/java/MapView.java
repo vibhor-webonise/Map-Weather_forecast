@@ -12,7 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
@@ -24,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 
 public class MapView extends Application {
 
@@ -32,24 +32,24 @@ public class MapView extends Application {
     private WeatherReport weatherReport;
     Double lat;
     Double lng;
-    TextField latitudeField;
-    TextField longitudeField;
-    TextField countryField;
-    TextField locationField;
-    TextField sunriseField;
-    TextField sunsetField;
-    TextField weatherField;
-    TextField tempField;
-    TextField pressureField;
-    TextField humidityField;
-    TextField windSpeedField;
+    Label latitudeField;
+    Label longitudeField;
+    Label countryField;
+    Label locationField;
+    Label sunriseField;
+    Label sunsetField;
+    Label weatherField;
+    Label tempField;
+    Label pressureField;
+    Label humidityField;
+    Label windSpeedField;
 
     @Override
     public void start(Stage stage) throws Exception {
 
         webView = new WebView();
         WebEngine webEngine = webView.getEngine();
-        final URL urlGoogleMaps = getClass().getResource("MapBox.html");
+        final URL urlGoogleMaps = getClass().getResource("web/MapBox.html");
         webEngine.load(urlGoogleMaps.toExternalForm());
 
         GridPane gridPane = new GridPane();
@@ -67,12 +67,12 @@ public class MapView extends Application {
 
         Label latitude = new Label("Latitude:");
         gridPane.add(latitude,0,3);
-        latitudeField = new TextField();
+        latitudeField = new Label();
         gridPane.add(latitudeField, 1, 3);
 
         Label longitude = new Label("Longitude:");
         gridPane.add(longitude, 0, 4);
-        longitudeField = new TextField();
+        longitudeField = new Label();
         gridPane.add(longitudeField, 1, 4);
 
         webEngine.getLoadWorker()
@@ -85,57 +85,49 @@ public class MapView extends Application {
                     }
                 });
 
-
-        /*getWeatherButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-            }
-        });*/
-
         Label country = new Label("Country:");
         gridPane.add(country,0,5);
-        countryField = new TextField();
+        countryField = new Label();
         gridPane.add(countryField, 1, 5);
 
         Label location = new Label("Location:");
         gridPane.add(location,0,6);
-        locationField = new TextField();
+        locationField = new Label();
         gridPane.add(locationField, 1, 6);
 
         Label sunrise = new Label("Sunrise:");
         gridPane.add(sunrise,0,7);
-        sunriseField = new TextField();
+        sunriseField = new Label();
         gridPane.add(sunriseField, 1, 7);
 
         Label sunset = new Label("Sunset:");
         gridPane.add(sunset,0,8);
-        sunsetField = new TextField();
+        sunsetField = new Label();
         gridPane.add(sunsetField, 1, 8);
 
         Label weather = new Label("Weather:");
         gridPane.add(weather,0,9);
-        weatherField = new TextField();
+        weatherField = new Label();
         gridPane.add(weatherField, 1, 9);
 
         Label temp = new Label("Temperature:");
         gridPane.add(temp,0,10);
-        tempField = new TextField();
+        tempField = new Label();
         gridPane.add(tempField, 1, 10);
 
         Label pressure = new Label("Pressure:");
         gridPane.add(pressure,0,11);
-        pressureField = new TextField();
+        pressureField = new Label();
         gridPane.add(pressureField, 1, 11);
 
         Label humidity = new Label("Humidity:");
         gridPane.add(humidity,0,12);
-        humidityField = new TextField();
+        humidityField = new Label();
         gridPane.add(humidityField, 1, 12);
 
         Label windSpeed = new Label("WindSpeed:");
         gridPane.add(windSpeed,0,13);
-        windSpeedField = new TextField();
+        windSpeedField = new Label();
         gridPane.add(windSpeedField, 1, 13);
 
         SplitPane sp = new SplitPane();
@@ -153,11 +145,19 @@ public class MapView extends Application {
         stage.show();
     }
 
+    public double roundTwoDecimals(double d)
+    {
+        DecimalFormat twoDForm = new DecimalFormat("#.######");
+        return Double.valueOf(twoDForm.format(d));
+    }
+
     public void setLatLng(Object lat,Object lng){
         this.lat = (Double)lat;
         this.lng = (Double)lng;
-        latitudeField.setText(""+lat);
-        longitudeField.setText(""+lng);
+        double latitude = roundTwoDecimals(this.lat);
+        double longitude = roundTwoDecimals(this.lng);
+        latitudeField.setText(""+latitude);
+        longitudeField.setText(""+longitude);
         try {
             String URL = "http://api.openweathermap.org/data/2.5/" +
                     "weather?lat=" + latitudeField.getText() + "&" + "lon=" + longitudeField.getText() + "&type=JSON";
