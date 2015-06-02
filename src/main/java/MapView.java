@@ -49,7 +49,7 @@ public class MapView extends Application {
 
         webView = new WebView();
         WebEngine webEngine = webView.getEngine();
-        final URL urlGoogleMaps = getClass().getResource("web/MapBox.html");
+        final URL urlGoogleMaps = getClass().getResource("html/MapBox.html");
         webEngine.load(urlGoogleMaps.toExternalForm());
 
         GridPane gridPane = new GridPane();
