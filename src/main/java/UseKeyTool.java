@@ -1,3 +1,4 @@
+/*
 import sun.security.tools.keytool.CertAndKeyGen;
 import sun.security.x509.X500Name;
 
@@ -7,9 +8,11 @@ import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 
+*/
 /**
  * Created by webonise on 02-06-2015.
- */
+ *//*
+
 public class UseKeyTool {
 
 
@@ -49,7 +52,8 @@ public class UseKeyTool {
 
         keyStore.store(new FileOutputStream(".keystore"), keyPass);
 
-
+        System.out.println(chain[0]);
 
     }
 }
+*/
