@@ -3,6 +3,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import javafx.application.Application;
+import javafx.concurrent.Worker;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import netscape.javascript.JSObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,7 +71,7 @@ public class MapView extends Application {
         gridPane.add(longitude, 0, 4);
         longitudeField = new Label();
         gridPane.add(longitudeField, 1, 4);
-/*
+
         webEngine.getLoadWorker()
                 .stateProperty()
                 .addListener( (obs, oldValue, newValue) -> {
@@ -78,7 +80,7 @@ public class MapView extends Application {
                         jsobj.call("initialize");
                         jsobj.call("getJavaToJSBridge" , this);
                     }
-                });*/
+                });
 
         Label country = new Label("Country:");
         gridPane.add(country,0,5);

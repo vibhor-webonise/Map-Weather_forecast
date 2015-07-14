@@ -28,54 +28,39 @@
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.1</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jarsigner-plugin</artifactId>
+                <version>1.4</version>
+                <goals>
+                    <goal>sign</goal>
+                </goals>
+                <inherited>true</inherited>
+                <configuration>
+                    <keystore>Keys.keystore</keystore>
+                    <storepass>changeit</storepass>
+                    <keypass>changeit</keypass>
+                    <alias>tomcat</alias>
+                </configuration>
+            </plugin>
 
                 <plugin>
                     <groupId>com.zenjava</groupId>
                     <artifactId>javafx-maven-plugin</artifactId>
                     <version>8.1.2</version>
                     <configuration>
-                        <mainClass>SelfSignedX509CertificateGeneratorDemo</mainClass>
+                        <mainClass>MapView</mainClass>
                         <vendor>DataMapper</vendor>
                         <css2bin>false</css2bin>
                         <allPermissions>true</allPermissions>
                         <needShortcut>true</needShortcut>
                         <keyStore>Keys.keystore</keyStore>
                         <keyStoreAlias>tomcat</keyStoreAlias>
-                        <keyStorePassword>VIBHOR</keyStorePassword>
+                        <keyStorePassword>changeit</keyStorePassword>
                         <keyPassword>changeit</keyPassword>
                         <nativeReleaseVersion>1.0</nativeReleaseVersion>
                     </configuration>
                 </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>keytool-maven-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <phase>generate-resources</phase>
-                        <id>clean</id>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <phase>generate-resources</phase>
-                        <id>genkey</id>
-                        <goals>
-                            <goal>generateKeyPair</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <keystore>Keys.keystore</keystore>
-                    <dname>CN=John Doe</dname>
-                    <keypass>changeit</keypass>
-                    <storepass>Vibhor</storepass>
-                    <alias>tomcat</alias>
-                    <keyalg>RSA</keyalg>
-                </configuration>
-            </plugin>
 
             </plugins>
             <finalName>DataMapperSignedApp</finalName>
@@ -135,11 +120,52 @@
             <version>4.2</version>
         </dependency>
 
+
         <!-- Json -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20090211</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.12</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.imgscalr</groupId>
+            <artifactId>imgscalr-lib</artifactId>
+            <version>4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.7.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.precisionmapper</groupId>
+            <artifactId>precisionmapper-api-client</artifactId>
+            <version>10.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
  </project>
